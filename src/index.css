@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* AG-Grid styles */
+.ag-theme-material {
+  --ag-font-family: 'Roboto', sans-serif;
+}
+
+/* Custom AG-Grid cell styles */
+.text-right {
+  text-align: right;
+}
+
+.text-success {
+  color: #4caf50;
+  font-weight: 500;
+}
+
+.text-danger {
+  color: #f44336;
+  font-weight: 500;
+}
+
+.text-warning {
+  color: #ff9800;
+  font-weight: 500;
+}
