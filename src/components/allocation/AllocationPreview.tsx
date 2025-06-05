@@ -80,6 +80,16 @@ const AllocationPreview: React.FC<AllocationPreviewProps> = ({ onBack, onCommit 
       },
     ];
 
+    // NAV column - always show
+    const navColumn: ColDef = {
+      field: 'nav',
+      headerName: 'NAV',
+      width: 150,
+      valueFormatter: (params) => formatCurrency(params.value || 0),
+      cellClass: 'text-right',
+      headerTooltip: 'Net Asset Value',
+    };
+
     // Add requested allocation columns if using custom weights
     const isCustomWeights = allocationMethod?.method === 'CUSTOM_WEIGHTS';
     const requestedColumns: ColDef[] = isCustomWeights ? [
@@ -149,7 +159,7 @@ const AllocationPreview: React.FC<AllocationPreviewProps> = ({ onBack, onCommit 
       },
     ];
 
-    return [...baseColumns, ...requestedColumns, ...allocationColumns,
+    return [...baseColumns, navColumn, ...requestedColumns, ...allocationColumns,
     {
       field: 'available_cash',
       headerName: 'Available Cash',

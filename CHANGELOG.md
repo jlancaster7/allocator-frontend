@@ -5,6 +5,17 @@ All notable changes to the Order Allocation System Frontend will be documented i
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2025-01-06
+
+### Added
+- **NAV Column in Allocation Preview** - Display Net Asset Value for each account in the allocation grid
+  - Helps verify pro-rata allocations match NAV proportions
+  - Shows account sizes for better allocation decisions
+  - Formatted as currency with proper alignment
+
+### Changed
+- Updated `AccountAllocation` TypeScript interface to include NAV field
+
 ## [1.1.0] - 2025-01-06
 
 ### Added

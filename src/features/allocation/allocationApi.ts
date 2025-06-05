@@ -55,6 +55,7 @@ export interface AllocationRequest {
 export interface AccountAllocation {
   account_id: string;
   account_name: string;
+  nav: number;  // Net Asset Value - added by backend
   allocated_quantity: number;
   allocated_notional: number;
   available_cash: number;

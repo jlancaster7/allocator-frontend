@@ -119,3 +119,9 @@ All components are ready and waiting for backend endpoints:
 - **New Types**: Full TypeScript support via `src/types/allocation.ts`
 - **Backward Compatible**: Legacy percentage weights still fully supported
 - **API Ready**: Uses the enhanced `CustomWeightsParameters` schema from API contract
+
+## 📈 Latest Updates (v1.1.1)
+- **NAV Display**: Added Net Asset Value column to allocation preview grid
+  - Essential for verifying pro-rata allocations
+  - Shows account sizes alongside allocation amounts
+  - Backend now includes NAV in allocation response
