@@ -64,33 +64,92 @@ const AllocationPreview: React.FC<AllocationPreviewProps> = ({ onBack, onCommit 
   }, [allocationConstraints, allocationMethod, orderDetails, previewAllocation, selectedPortfolioGroups]);
 
   // Column definitions for AG-Grid
-  const columnDefs: ColDef[] = useMemo(() => [
-    {
-      field: 'account_id',
-      headerName: 'Account ID',
-      width: 120,
-      pinned: 'left',
-    },
-    {
-      field: 'account_name',
-      headerName: 'Account Name',
-      width: 200,
-      pinned: 'left',
-    },
-    {
-      field: 'allocated_quantity',
-      headerName: 'Allocated Qty',
-      width: 130,
-      valueFormatter: (params) => formatNumber(params.value),
-      cellClass: 'text-right',
-    },
-    {
-      field: 'allocated_notional',
-      headerName: 'Notional ($)',
-      width: 130,
-      valueFormatter: (params) => formatCurrency(params.value),
-      cellClass: 'text-right',
-    },
+  const columnDefs: ColDef[] = useMemo(() => {
+    const baseColumns: ColDef[] = [
+      {
+        field: 'account_id',
+        headerName: 'Account ID',
+        width: 120,
+        pinned: 'left',
+      },
+      {
+        field: 'account_name',
+        headerName: 'Account Name',
+        width: 200,
+        pinned: 'left',
+      },
+    ];
+
+    // Add requested allocation columns if using custom weights
+    const isCustomWeights = allocationMethod?.method === 'CUSTOM_WEIGHTS';
+    const requestedColumns: ColDef[] = isCustomWeights ? [
+      {
+        field: 'requested_type',
+        headerName: 'Request Type',
+        width: 120,
+        valueFormatter: (params) => {
+          if (!params.value) return '';
+          switch (params.value) {
+            case 'DOLLAR_AMOUNT': return '$ Amount';
+            case 'PERCENTAGE': return 'Percentage';
+            case 'QUANTITY': return 'Quantity';
+            default: return params.value;
+          }
+        },
+      },
+      {
+        field: 'requested_value',
+        headerName: 'Requested',
+        width: 130,
+        valueFormatter: (params) => {
+          if (!params.value || !params.data.requested_type) return '';
+          switch (params.data.requested_type) {
+            case 'DOLLAR_AMOUNT':
+              return formatCurrency(params.value);
+            case 'PERCENTAGE':
+              return `${(params.value * 100).toFixed(2)}%`;
+            case 'QUANTITY':
+              return formatNumber(params.value);
+            default:
+              return params.value;
+          }
+        },
+        cellClass: 'text-right',
+      },
+      {
+        field: 'allocation_source',
+        headerName: 'Source',
+        width: 100,
+        valueFormatter: (params) => {
+          if (!params.value) return '';
+          switch (params.value) {
+            case 'DIRECT': return 'Direct';
+            case 'REMAINDER': return 'Remainder';
+            case 'PRO_RATA': return 'Pro-Rata';
+            default: return params.value;
+          }
+        },
+      },
+    ] : [];
+
+    const allocationColumns: ColDef[] = [
+      {
+        field: 'allocated_quantity',
+        headerName: 'Allocated Qty',
+        width: 130,
+        valueFormatter: (params) => formatNumber(params.value),
+        cellClass: 'text-right',
+      },
+      {
+        field: 'allocated_notional',
+        headerName: 'Notional ($)',
+        width: 130,
+        valueFormatter: (params) => formatCurrency(params.value),
+        cellClass: 'text-right',
+      },
+    ];
+
+    return [...baseColumns, ...requestedColumns, ...allocationColumns,
     {
       field: 'available_cash',
       headerName: 'Available Cash',
@@ -130,7 +189,8 @@ const AllocationPreview: React.FC<AllocationPreviewProps> = ({ onBack, onCommit 
       valueFormatter: (params) => formatDecimal(params.value, 3),
       cellClass: (params) => params.value > 0 ? 'text-danger' : 'text-success',
     },
-  ], []);
+    ];
+  }, [allocationMethod]);
 
   const defaultColDef = useMemo(() => ({
     sortable: true,

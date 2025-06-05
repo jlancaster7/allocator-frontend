@@ -112,7 +112,12 @@ src/
 
 ### Allocation Methods
 - **Pro-Rata**: Allocate based on account NAV proportions
-- **Custom Weights**: Manually specify allocation percentages
+- **Custom Weights**: Enhanced mode with multiple allocation types
+  - Dollar amounts (e.g., allocate $2M to an account)
+  - Percentages (e.g., allocate 25% to an account)
+  - Quantities (e.g., allocate 500,000 bonds to an account)
+  - Mix different types in a single allocation
+  - Smart remainder distribution options
 - **Minimum Dispersion**: Optimize to minimize active spread duration dispersion
 
 ## Testing

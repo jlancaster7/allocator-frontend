@@ -85,5 +85,37 @@ All components are ready and waiting for backend endpoints:
 3. **API Contract Mismatch** - Identified backend deviation from agreed API contract for portfolio groups endpoint
 
 ## ⚠️ Known Backend Issues
-- **Portfolio Groups Endpoint**: Backend returns `id/name` instead of contracted `group_id/group_name`
-- Frontend has been made resilient to handle both formats until backend is fixed
+- ~~**Portfolio Groups Endpoint**: Backend returns `id/name` instead of contracted `group_id/group_name`~~ ✅ FIXED
+- ~~Frontend has been made resilient to handle both formats until backend is fixed~~ ✅ FIXED
+
+## 🚀 New Features Added (Enhanced Custom Weights)
+1. **Enhanced Allocation Mode** 
+   - Toggle between legacy percentage-only and new enhanced mode
+   - Support for three allocation types per account:
+     - Dollar Amount (e.g., $2,000,000)
+     - Percentage (e.g., 25%)
+     - Quantity (e.g., 500,000 bonds)
+   - Mix different types within a single allocation
+
+2. **Remainder Handling**
+   - Distribute unallocated bonds via:
+     - Pro-rata (by NAV)
+     - Equal split
+     - None (default)
+   - Allow partial allocation option for constrained scenarios
+
+3. **Enhanced Preview Display**
+   - New columns showing requested type and value
+   - Allocation source tracking (Direct/Remainder/Pro-Rata)
+   - Clear visibility of what was requested vs. allocated
+
+4. **Smart Validation**
+   - Type-specific validation (percentages ≤ 100%, quantities ≤ order quantity)
+   - Dynamic input formatting with currency/percentage symbols
+   - Real-time feedback on allocation totals
+
+## 📊 Implementation Details
+- **New Components**: `AllocationTypeSelector` for type selection UI
+- **New Types**: Full TypeScript support via `src/types/allocation.ts`
+- **Backward Compatible**: Legacy percentage weights still fully supported
+- **API Ready**: Uses the enhanced `CustomWeightsParameters` schema from API contract
